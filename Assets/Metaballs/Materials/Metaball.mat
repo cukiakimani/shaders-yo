@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Spring
-  m_Shader: {fileID: 4800000, guid: 83943589f5d41413fb5061fec7ca0c1e, type: 3}
+  m_Name: Metaball
+  m_Shader: {fileID: 4800000, guid: f00c124d723b65548803195ec7ae607a, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -47,10 +47,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _NoiseTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -59,20 +55,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _VelocityTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _ArrayLen: 2
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _DeltaTime: 0.02
     - _DetailNormalMapScale: 1
-    - _DistortPositionX: 0.7169203
-    - _DistortPositionY: 0.53021
     - _DstBlend: 0
-    - _Extrusion: 1
-    - _Frequency: 2
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -80,16 +68,15 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _PercentageDecay: 0.76
-    - _Radius: -0.0023199462
+    - _R0: 0.16
+    - _R1: 0.1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TimeDecay: 0.452
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+    - _C0: {r: 0.5, g: 0.43, b: 0, a: 1}
+    - _C1: {r: 0.84, g: 0.77, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DistortPosition: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MyColor: {r: 1, g: 0, b: 0, a: 1}

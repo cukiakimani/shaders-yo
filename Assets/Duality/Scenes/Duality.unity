@@ -206,7 +206,6 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: 386b37b2ac14a1b4595197277b2e41e0, type: 2}
   texture: {fileID: 8400000, guid: 4bafb0c1c13e55149bd7d233b53326a5, type: 2}
   initialTexture: {fileID: 2800000, guid: 92f04edf8e6bc4e21abd9325fe19a87c, type: 3}
-  startFixedUpdate: 0
 --- !u!4 &44855255
 Transform:
   m_ObjectHideFlags: 0
@@ -215,7 +214,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 44855250}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.21, y: 0, z: -7.769}
+  m_LocalPosition: {x: -3.03, y: 0, z: -7.769}
   m_LocalScale: {x: 0.088984154, y: 0.08898416, z: 0.08898416}
   m_Children:
   - {fileID: 1838391682}
@@ -235,8 +234,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DistorterStartEndPos:
-  - {x: 3, y: 0, z: -7.769}
-  - {x: -3, y: 0, z: -7.769}
+  - {x: 2, y: 0, z: -7.769}
+  - {x: -2, y: 0, z: -7.769}
   MainSphere: {fileID: 4239192}
   RadiusMovement:
     serializedVersion: 2
@@ -291,7 +290,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   RadiusMax: 0.21
   Time: 0
-  Distorter: {fileID: 44855255}
+  AnimTime: 2
 --- !u!1 &67310709
 GameObject:
   m_ObjectHideFlags: 0
