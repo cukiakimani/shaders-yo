@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// [ExecuteInEditMode]
 public class MetaballQuad : MonoBehaviour
 {
     [SerializeField] private Transform blob1;
@@ -16,7 +17,7 @@ public class MetaballQuad : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
         meshFilter = GetComponent<MeshFilter>();
 
-        metaballMaterial = meshRenderer.material;
+        metaballMaterial = meshRenderer.sharedMaterial;
 
         CreateQuadToCameraSize();
     }
@@ -25,6 +26,11 @@ public class MetaballQuad : MonoBehaviour
     {
         metaballMaterial.SetVector("_C0", transform.InverseTransformPoint(blob1.position));
         metaballMaterial.SetVector("_C1", transform.InverseTransformPoint(blob2.position));
+        metaballMaterial.SetFloat("_R0", blob1.localScale.x);
+        metaballMaterial.SetFloat("_R1", blob2.localScale.x);
+
+        DebugDrawCircle(blob1.position, blob1.localScale.x, Color.black);
+        DebugDrawCircle(blob2.position, blob2.localScale.x, Color.black);
     }
 
     private void CreateQuadToCameraSize()
