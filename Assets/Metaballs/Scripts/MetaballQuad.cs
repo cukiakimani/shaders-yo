@@ -5,12 +5,28 @@ using UnityEngine;
 // [ExecuteInEditMode]
 public class MetaballQuad : MonoBehaviour
 {
+    [SerializeField, Range(1, 4000)] private int numBlobs = 5;
+
+    [SerializeField] private float minRadius;
+    [SerializeField] private float maxRadius;
+
+    [SerializeField] private float minSpeed;
+    [SerializeField] private float maxSpeed;
+
+    [Space]
+
     [SerializeField] private Transform blob1;
     [SerializeField] private Transform blob2;
 
     private Material metaballMaterial;
     private MeshRenderer meshRenderer;
     private MeshFilter meshFilter;
+
+    private Vector4[] blobs;
+    private Transform[] blobTransforms;
+    private Vector3[] blobVelocities;
+
+    private Bounds bounds;
 
     void Start()
     {
@@ -19,18 +35,110 @@ public class MetaballQuad : MonoBehaviour
 
         metaballMaterial = meshRenderer.sharedMaterial;
 
+        float minX = transform.position.x + 0.1f;
+        float maxX = transform.position.x + 0.9f;
+
+        float minY = transform.position.y + 0.1f;
+        float maxY = transform.position.y + 0.9f;
+
+        bounds = new Bounds();
+        bounds.min = new Vector3(minX, minY);
+        bounds.max = new Vector3(maxX, maxY);
+
         CreateQuadToCameraSize();
+        CreateBlobs();
     }
 
     void Update()
     {
+        DebugDrawRect(bounds.center, bounds.size.x, bounds.size.y, Color.green);
+
+        UpdateBlobs();
+        DebugDrawBlobs();
+    }
+
+    private void DebugDrawBlobs()
+    {
+        DebugDrawCircle(blob1.position, blob1.localScale.x, Color.black);
+        DebugDrawCircle(blob2.position, blob2.localScale.x, Color.black);
+
+        for (int i = 0; i < numBlobs; i++)
+        {
+            DebugDrawCircle(blobTransforms[i].position, blobTransforms[i].localScale.x, Color.black);
+        }
+    }
+
+    private void UpdateBlobs()
+    {
         metaballMaterial.SetVector("_C0", transform.InverseTransformPoint(blob1.position));
         metaballMaterial.SetVector("_C1", transform.InverseTransformPoint(blob2.position));
+        
         metaballMaterial.SetFloat("_R0", blob1.localScale.x);
         metaballMaterial.SetFloat("_R1", blob2.localScale.x);
 
-        DebugDrawCircle(blob1.position, blob1.localScale.x, Color.black);
-        DebugDrawCircle(blob2.position, blob2.localScale.x, Color.black);
+        for (int i = 0; i < numBlobs; i++)
+        {
+            MoveBlob(blobTransforms[i], ref blobVelocities[i]);
+
+            Vector3 invPosition = transform.InverseTransformPoint(blobTransforms[i].position);
+            
+            blobs[i].x = invPosition.x;
+            blobs[i].y = invPosition.y;
+            blobs[i].z = blobTransforms[i].localScale.x;
+        }
+
+        metaballMaterial.SetInt("_Blobs_Length", numBlobs);
+        metaballMaterial.SetVectorArray("_Blobs", blobs);
+    }
+
+    private void CreateBlobs()
+    {
+        blobs = new Vector4[numBlobs];
+        blobTransforms = new Transform[numBlobs];
+        blobVelocities = new Vector3[numBlobs];
+
+        for (int i = 0; i < numBlobs; i++)
+        {
+            float x = Random.Range(bounds.min.x, bounds.max.x);
+            float y = Random.Range(bounds.min.y, bounds.max.y);
+            float r = Random.Range(minRadius, maxRadius);
+            float s = Random.Range(minSpeed, maxSpeed);
+
+            Vector3 vel = Random.onUnitSphere * s;
+            vel.z = 0f;
+            blobVelocities[i] = vel;
+
+            blobs[i] = new Vector4(x, y, r);
+
+            var blobObject = new GameObject("blob");
+            Vector3 scale = Vector3.one * r;
+            Vector3 position = new Vector3(x, y);
+
+            var blobTransform = blobObject.transform;
+            blobTransform.position = position;
+            blobTransform.localScale = scale;
+            blobTransform.SetParent(transform);
+
+            blobTransforms[i] = blobTransform;
+        }
+    }
+
+    private void MoveBlob(Transform t, ref Vector3 velocity)
+    {
+        // check boundaries and bounce off
+        if (t.position.x <= bounds.min.x || t.position.x >= bounds.max.x)
+        {
+            velocity.x *= -1f;
+        }
+
+        if (t.position.y <= bounds.min.y || t.position.y >= bounds.max.y)
+        {
+            velocity.y *= -1f;
+        }
+
+        // move postion with speed
+        t.position += velocity * Time.deltaTime;
+
     }
 
     private void CreateQuadToCameraSize()

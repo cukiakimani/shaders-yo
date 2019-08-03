@@ -26,7 +26,7 @@
 		Lighting Off
 		ZWrite Off
 		Blend One OneMinusSrcAlpha
-
+		
 		Pass
 		{
 			CGPROGRAM
@@ -57,38 +57,31 @@
 			
 			sampler2D _MainTex;
 			float4 _Color;
-			// fixed4 _Array[10];
-			// int _ArrayLen;
-
+			
 			float4 _C0;
 			float _R0;
 
 			float4 _C1;
 			float _R1;
-
-			// float sumCircleNum(fixed2 pos)
-			// {
-			// 	float sum = 0;
-
-			// 	for (int i = 0; i < _ArrayLen; i++)
-			// 	{
-			// 		sum += pow(_Array[i].w, 2) / (pow(pos.x - _Array[i].x, 2) + pow(pos.y - _Array[i].y, 2));
-			// 	}
-
-			// 	return sum;
-			// }
+			
+			uniform int _Blobs_Length = 0;
+ 			uniform float3 _Blobs [4000]; // (x, y) = position ; z = radius
 
 			fixed4 frag (v2f i) : SV_Target
 			{
 				fixed4 col = tex2D(_MainTex, i.uv);
+				
+				float mx = 0;
+				for (int j = 0; j < _Blobs_Length; j++)
+				{
+					mx += pow(_Blobs[j].z, 2) / (pow(i.uv.x - _Blobs[j].x, 2) + pow(i.uv.y - _Blobs[j].y, 2));
+				}
 
 				float n0 = pow(_R0, 2) / (pow(i.uv.x - _C0.x, 2) + pow(i.uv.y - _C0.y, 2));
 				float n1 = pow(_R1, 2) / (pow(i.uv.x - _C1.x, 2) + pow(i.uv.y - _C1.y, 2));
+				mx = mx + n0 + n1;
 
-				// float max = sumCircleNum(i.uv);
-				float max = n0 + n1;
-
-				if (max > 1)
+				if (mx > 1)
 					return _Color;
 				else 
 					return fixed4(0, 0, 0, 0);
