@@ -7,6 +7,8 @@ public class MetaballQuad : MonoBehaviour
 {
     [SerializeField, Range(1, 4000)] private int numBlobs = 5;
 
+    [SerializeField] private float borderWidth = 0.2f;
+
     [SerializeField] private float minRadius;
     [SerializeField] private float maxRadius;
 
@@ -35,11 +37,11 @@ public class MetaballQuad : MonoBehaviour
 
         metaballMaterial = meshRenderer.sharedMaterial;
 
-        float minX = transform.position.x + 0.1f;
-        float maxX = transform.position.x + 0.9f;
+        float minX = transform.position.x + borderWidth;
+        float maxX = transform.position.x + (1- borderWidth);
 
-        float minY = transform.position.y + 0.1f;
-        float maxY = transform.position.y + 0.9f;
+        float minY = transform.position.y + borderWidth;
+        float maxY = transform.position.y + (1- borderWidth);
 
         bounds = new Bounds();
         bounds.min = new Vector3(minX, minY);
@@ -59,12 +61,12 @@ public class MetaballQuad : MonoBehaviour
 
     private void DebugDrawBlobs()
     {
-        DebugDrawCircle(blob1.position, blob1.localScale.x, Color.black);
-        DebugDrawCircle(blob2.position, blob2.localScale.x, Color.black);
+        DebugDrawCircle(blob1.position, blob1.localScale.x, Color.white);
+        DebugDrawCircle(blob2.position, blob2.localScale.x, Color.white);
 
         for (int i = 0; i < numBlobs; i++)
         {
-            DebugDrawCircle(blobTransforms[i].position, blobTransforms[i].localScale.x, Color.black);
+            DebugDrawCircle(blobTransforms[i].position, blobTransforms[i].localScale.x, Color.white);
         }
     }
 
