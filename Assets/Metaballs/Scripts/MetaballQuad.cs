@@ -53,7 +53,7 @@ public class MetaballQuad : MonoBehaviour
 
     void Update()
     {
-        DebugDrawRect(bounds.center, bounds.size.x, bounds.size.y, Color.green);
+        UtilityFunctions.DebugDrawRect(bounds.center, bounds.size.x, bounds.size.y, Color.green);
 
         UpdateBlobs();
         DebugDrawBlobs();
@@ -61,12 +61,12 @@ public class MetaballQuad : MonoBehaviour
 
     private void DebugDrawBlobs()
     {
-        DebugDrawCircle(blob1.position, blob1.localScale.x, Color.white);
-        DebugDrawCircle(blob2.position, blob2.localScale.x, Color.white);
+        UtilityFunctions.DebugDrawCircle(blob1.position, blob1.localScale.x, Color.white);
+        UtilityFunctions.DebugDrawCircle(blob2.position, blob2.localScale.x, Color.white);
 
         for (int i = 0; i < numBlobs; i++)
         {
-            DebugDrawCircle(blobTransforms[i].position, blobTransforms[i].localScale.x, Color.white);
+            UtilityFunctions.DebugDrawCircle(blobTransforms[i].position, blobTransforms[i].localScale.x, Color.white);
         }
     }
 
@@ -177,45 +177,5 @@ public class MetaballQuad : MonoBehaviour
         mesh.uv = uvs;
 
         meshFilter.mesh = mesh;
-    }
-
-    private void DebugDrawRect(Vector3 position, float width, float height, Color color)
-    {
-        var topLeft = position + new Vector3(-width * 0.5f, height * 0.5f);
-        var topRight = position + new Vector3(width * 0.5f, height * 0.5f);
-        var bottomLeft = position + new Vector3(-width * 0.5f, -height * 0.5f);
-        var bottomRight = position + new Vector3(width * 0.5f, -height * 0.5f);
-
-        Debug.DrawLine(bottomLeft, topLeft, color);
-        Debug.DrawLine(topLeft, topRight, color);
-        Debug.DrawLine(topRight, bottomRight, color);
-        Debug.DrawLine(bottomRight, bottomLeft, color);
-    }
-
-    private void DebugDrawCircle(Vector3 position, float radius, Color color)
-    {
-        var inc = 36f;
-        var angle = 360f / inc;
-        var a = position + Vector3.up * radius;
-
-        for (int i = 0; i < inc; i++)
-        {
-            var b = a - position;
-            b = UtilityFunctions.RotateVector(angle, b);
-            b += position;
-            Debug.DrawLine(a, b, color);
-            a = b;
-        }
-    }
-
-    private void DebugDrawCross(Vector3 position, float size, Color color, float duration = 0f)
-    {
-        Vector3 top = position + Vector3.up * size * 0.5f;
-        Vector3 bottom = position + Vector3.down * size * 0.5f;
-        Vector3 right = position + Vector3.right * size * 0.5f;
-        Vector3 left = position + Vector3.left * size * 0.5f;
-
-        Debug.DrawLine(top, bottom, color, duration);
-        Debug.DrawLine(right, left, color, duration);
     }
 }
