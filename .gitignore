@@ -5,7 +5,8 @@
 [Bb]uilds/
 Assets/AssetStoreTools*
 _Build/
-
+_ShaderTemplate/
+_ShaderTemplate.meta
 # Visual Studio cache directory
 .vs/
 

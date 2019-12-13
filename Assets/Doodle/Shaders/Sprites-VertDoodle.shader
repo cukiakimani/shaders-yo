@@ -6,8 +6,8 @@ Shader "Sprites/Vert Doodle"
     {
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
-        _NoiseScale ("Noise Scale", Float) = 0.01
-        _NoiseSnap ("Noise Snap", Float) = 0.25
+        _NoiseScale ("Noise Scale", Range(0.0, 0.08)) = 0.01
+        _NoiseSnap ("Noise Snap", Range(0.001, 0.01)) = 0.005
         [MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
         [HideInInspector] _RendererColor ("RendererColor", Color) = (1,1,1,1)
         [HideInInspector] _Flip ("Flip", Vector) = (1,1,1,1)
